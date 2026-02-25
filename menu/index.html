@@ -1,1 +1,445 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu Roti Sobek Halalin - Premium Selection</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+  <style>
+    /* === 1. KONFIGURASI WARNA & VARIABEL === */
+    :root {
+      --tosca-light: #a0e7e5;
+      --tosca: #40b7af;
+      --tosca-dark: #2f8f8b;
+      --tosca-deep: #1a5e5b;
+      --text-dark: #002f2f;
+      --bg-light: #f0fafa; /* Sedikit lebih terang */
+      --shadow: rgba(0, 0, 0, 0.08);
+      --shadow-hover: rgba(64, 183, 175, 0.25);
+    }
+
+    /* === 2. RESET & GLOBAL STYLE BERKELAS === */
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif; /* Font modern */
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 15px 50px;
+      padding-top: 100px; /* Space untuk navbar fixed */
+    }
+
+    /* === 3. MODERN NAVBAR (TAMBAHAN) === */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px); /* Efek Kaca */
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--tosca-dark);
+    }
+
+    .nav-btn {
+      background-color: var(--tosca);
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .nav-btn:hover { background-color: var(--tosca-deep); }
+
+    /* === 4. HEADER MEWAH === */
+    header {
+      background: linear-gradient(135deg, var(--tosca), var(--tosca-dark));
+      width: 100%;
+      max-width: 900px;
+      padding: 40px 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px var(--shadow-hover);
+      text-align: center;
+      margin-bottom: 30px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Efek hiasan background */
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50px; left: -50px;
+      width: 150px; height: 150px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      margin: 0 0 10px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    header p {
+      color: #e0fbfb;
+      font-size: 1.1rem;
+      font-weight: 300;
+      margin: 0;
+    }
+
+    /* === 5. SEARCH BAR (FITUR FULL STACK) === */
+    .search-container {
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 50px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: 0.3s;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--tosca);
+      box-shadow: 0 0 10px rgba(64, 183, 175, 0.2);
+    }
+
+    /* === 6. MAIN GRID SYSTEM === */
+    main {
+      width: 100%;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px var(--shadow);
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(0,0,0,0.02);
+      opacity: 0; /* Untuk animasi fade-in JS */
+      transform: translateY(20px);
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px var(--shadow-hover);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-bottom: 4px solid var(--tosca);
+      transition: transform 0.5s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-content h3 {
+      font-family: 'Playfair Display', serif;
+      margin: 0 0 10px;
+      color: var(--tosca-dark);
+      font-size: 1.4rem;
+    }
+
+    .card-content p {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* Tombol Pesan Premium */
+    .order-btn {
+      background: linear-gradient(to right, var(--tosca), var(--tosca-dark));
+      border: none;
+      color: white;
+      padding: 12px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(64, 183, 175, 0.3);
+      transition: all 0.3s ease;
+      width: 100%;
+      letter-spacing: 0.5px;
+    }
+
+    .order-btn:hover {
+      background: linear-gradient(to right, var(--tosca-dark), var(--tosca-deep));
+      box-shadow: 0 6px 15px rgba(64, 183, 175, 0.5);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 60px;
+      color: var(--tosca-dark);
+      font-size: 0.9rem;
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(64, 183, 175, 0.2);
+      width: 100%;
+      max-width: 900px;
+    }
+
+    /* Not Found Message */
+    .not-found {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      color: #888;
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      header h1 { font-size: 2rem; }
+      .card img { height: 180px; }
+      .navbar { padding: 10px 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-brand">Halalin Cake</div>
+    <button class="nav-btn" onclick="window.location.href='https://rotisobekhalalin.my.id/'">⬅ Kembali ke Home</button>
+  </nav>
+
+  <header>
+    <h1>MENU ROTI SOBEK</h1>
+    <p>By Halalin Cake</p>
+    <div style="margin-top: 10px; font-style: italic; opacity: 0.9; font-size: 0.9rem;">
+      "Oleh-oleh Sederhana tapi bikin Rindu"
+    </div>
+  </header>
+  
+  <div class="search-container">
+    <input type="text" id="searchInput" class="search-input" placeholder="🔍 Cari varian rasa favoritmu..." onkeyup="filterMenu()">
+  </div>
+
+  <main id="menuContainer">
+    <div class="not-found" id="notFound">
+      <h3>Maaf, varian roti tersebut tidak ditemukan.</h3>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2024 Roti Sobek Halalin. <br>Premium Quality & Halal Certified.
+  </footer>
+
+  <script>
+    // 1. DATA CENTER (DATABASE SIMULATION)
+    // Data ini seolah-olah diambil dari server backend (API).
+    // Anda bisa menambah menu baru di sini tanpa menyentuh HTML.
+    const menuData = [
+      {
+        id: 1,
+        name: "Pisang Coklat Keju",
+        desc: "Roti sobek lembut dengan pisang yang sedap, topping keju melimpah dan meses coklat premium.",
+        img: "/images/rotipiscok.png",
+        waParam: "Roti Sobek coklat keju"
+      },
+      {
+        id: 2,
+        name: "Peanut Butter",
+        desc: "Roti sobek fresh from the oven dengan taburan keju gurih dan selai kacang creamy yang enak.",
+        img: "/images/rotisobekk.png",
+        waParam: "Roti Sobek peanut butter"
+      },
+      {
+        id: 3,
+        name: "Pizza Special",
+        desc: "Sensasi gurih roti lembut dengan topping sosis sapi, saus spesial, mayones, dan taburan keju.",
+        img: "/images/rotipizza.png",
+        waParam: "Roti Sobek pizza"
+      },
+      {
+        id: 4,
+        name: "Abon Roll",
+        desc: "Perpaduan sempurna roti manis yang sangat lembut dengan topping Abon sapi asli yang melimpah.",
+        img: "/images/rotiabon.png",
+        waParam: "Roti Sobek Abon"
+      },
+      {
+        id: 5,
+        name: "Garlic Cheese",
+        desc: "Aroma bawang putih yang menggugah selera dipadukan dengan lelehnya keju gurih.",
+        img: "/images/rotigarlic.png",
+        waParam: "Roti Sobek garlic cheese"
+      },
+      {
+        id: 6,
+        name: "Coklat Keju",
+        desc: "Favorit sepanjang masa. Roti lembut dengan isian dan topping coklat serta keju yang tidak pelit.",
+        img: "/images/roticokju.png",
+        waParam: "Roti Sobek coklat keju"
+      },
+      {
+        id: 7,
+        name: "brownies cheese",
+        desc: "Roti sobek lembut dengan rasa brownies cheese dan taburan almond slice. Teksturnya empuk, rasa kejunya kuat, cocok untuk pecinta brownies premium.",
+        img: "/images/broncis.png",
+        waParam: "Roti Sobek brownies cheese"
+      },
+      {
+        id: 8,
+        name: "full coklat",
+        desc: "Roti sobek lembut dengan full coklat premium",
+        img: "/images/coklatroti.png",
+        waParam: "Roti Sobek full coklat"
+      },
+      {
+        id: 9,
+        name: "buttercream cheese",
+        desc: "Roti sobek manis dengan buttercream dan topping keju premium yang melimpah. Rasanya gurih-manis dan sangat lembut.",
+        img: "/images/buttercream.png",
+        waParam: "Roti Sobek buttercream cheese"
+      },
+      {
+        id: 10,
+        name: "Choco maltine",
+        desc: "Roti sobek isi coklat melimpah dengan topping keju gurih. Coklat crunchy yang tebal dan lembut, keju menambah rasa creamy, sangat cocok untuk penggemar coklat keju.",
+        img: "/images/cokmal.png",
+        waParam: "Roti Sobek Choco maltine"
+      },
+      {
+        id: 11,
+        name: "Roti srikaya",
+        desc: "Roti lembut berisi srikaya manis-creamy dengan topping almond renyah. Perpaduan manis dan gurih yang pas di setiap gigitan.",
+        img: "/images/srikaya.png",
+        waParam: "Roti Sobek Srikaya"
+      },
+      {
+        id: 12,
+        name: "choco hazelnut",
+        desc: "Roti sobek isi coklat premium dengan parutan keju di atasnya. Perpaduan keju dan coklat premium yang pas, cocok untuk yang suka rasa balance.",
+        img: "/images/coklathaz.png",
+        waParam: "Roti Sobek Choco huzelnut"
+      }
+    ];
+
+    // 2. RENDER FUNCTION (VIEW CONTROLLER)
+    // Fungsi ini bertugas mengubah Data JSON menjadi tampilan HTML (Kartu)
+    function renderMenu(items) {
+      const container = document.getElementById('menuContainer');
+      const notFound = document.getElementById('notFound');
+      
+      // Hapus konten lama (kecuali pesan not found)
+      const existingCards = container.querySelectorAll('.card');
+      existingCards.forEach(card => card.remove());
+
+      if (items.length === 0) {
+        notFound.style.display = 'block';
+        return;
+      } else {
+        notFound.style.display = 'none';
+      }
+
+      items.forEach((item, index) => {
+        const card = document.createElement('section');
+        card.className = 'card';
+        card.setAttribute('tabindex', '0');
+        
+        // Template String untuk HTML Card
+        card.innerHTML = `
+          <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200?text=Menu+Image'">
+          <div class="card-content">
+            <div>
+              <h3>${item.name}</h3>
+              <p>${item.desc}</p>
+            </div>
+            <button class="order-btn" onclick="orderNow('${item.waParam}')">
+              Pesan Sekarang
+            </button>
+          </div>
+        `;
+        
+        container.appendChild(card);
+
+        // Animasi Sequential Fade In (Agar terlihat elegan)
+        setTimeout(() => {
+          card.classList.add('visible');
+        }, index * 100); // Delay bertingkat
+      });
+    }
+
+    // 3. LOGIC FUNCTION (CONTROLLER)
+    function orderNow(productName) {
+      // Mengarahkan langsung ke WhatsApp
+      const url = `https://wa.me/6281280230885?text=Halo%20saya%20ingin%20memesan%20${encodeURIComponent(productName)}`;
+      window.location.href = url;
+    }
+
+    // Fitur Search / Filter
+    function filterMenu() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const filteredData = menuData.filter(item => {
+        return item.name.toLowerCase().includes(input) || item.desc.toLowerCase().includes(input);
+      });
+      renderMenu(filteredData);
+    }
+
+    // Initial Load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderMenu(menuData);
+    });
+  </script>
+</body>
+</html>
