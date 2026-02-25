@@ -1,1 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kuker Lebaran Spesial Ramadan | Halalin Cake</title>
+  <style>
+    :root{
+      --primary:#0ea5a4;
+      --secondary:#facc15;
+      --dark:#064e4d;
+      --light:#f8fafc;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:'Poppins',Arial,sans-serif;
+      background:linear-gradient(180deg,#0ea5a4 0%,#38bdf8 100%);
+      color:#1f2937;
+    }
 
+    /* HERO */
+    .hero{
+      display:flex;
+      justify-content:center;
+      padding:80px 16px 40px;
+    }
+    .hero-box{
+      max-width:1100px;
+      width:100%;
+      background:rgba(255,255,255,.18);
+      backdrop-filter:blur(8px);
+      border-radius:28px;
+      padding:48px 40px;
+      text-align:center;
+      color:white;
+      box-shadow:0 30px 70px rgba(0,0,0,.35);
+    }
+    .hero-box h1{font-size:2.6rem;margin:0 0 12px}
+    .hero-box p{font-size:1.05rem;opacity:.95;margin-bottom:26px}
+    .cta{display:inline-block;padding:14px 34px;background:linear-gradient(135deg,var(--secondary),#fde047);color:#78350f;font-weight:700;border-radius:999px;text-decoration:none}
+
+    /* SECTION TITLE */
+    .section-title{
+      text-align:center;
+      font-size:2.2rem;
+      font-weight:800;
+      color:white;
+      margin:60px 0 30px;
+      letter-spacing:1px;
+    }
+
+    /* PRODUK */
+    .container{max-width:1200px;margin:auto;padding:20px 16px 60px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+    .card{background:white;border-radius:22px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,.15);transition:.3s}
+    .card:hover{transform:translateY(-6px)}
+    .card img{width:100%;height:220px;object-fit:cover;cursor:pointer}
+    .card-body{padding:18px;text-align:center}
+    .card-body h3{margin:0 0 10px;color:var(--dark)}
+    .order-btn{border:none;padding:12px 24px;border-radius:999px;background:linear-gradient(135deg,var(--secondary),#fde047);color:#78350f;font-weight:700;cursor:pointer}
+
+    /* MODAL UMUM */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:99}
+    .modal-box{background:white;border-radius:24px;padding:26px;width:100%;max-width:420px}
+    .modal h2{margin-top:0;color:var(--dark)}
+    .paket{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+    .modal button{width:100%;padding:12px;border:none;border-radius:999px;background:linear-gradient(135deg,var(--primary),#22d3ee);color:white;font-weight:700;cursor:pointer}
+
+    /* VIEW IMAGE */
+    .img-view{max-width:90%;max-height:90%;border-radius:20px}
+
+    footer{text-align:center;margin:40px 0;color:#e0f2fe;font-size:.9rem}
+    footer a{color:#fef08a;text-decoration:none}
+
+    .top-right-back {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(90deg, #40b7af, #5cc4ff);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 6px 15px rgba(64,183,175,0.35);
+  transition: 0.3s ease;
+}
+
+.top-right-back:hover {
+  background: linear-gradient(90deg, #2ea39e, #42b9ff);
+  box-shadow: 0 10px 20px rgba(64,183,175,0.5);
+  transform: translateY(-3px);
+}
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-box">
+      <h1>Kue Spesial Ramadan</h1>
+      <p>Halalin Cake & Bakery – Sajian Istimewa untuk Lebaran yang Penuh Berkah</p>
+      
+    </div>
+  </section>
+<a href="https://rotisobekhalalin.my.id" class="top-right-back">Kembali ke Beranda</a>
+  <!-- PRODUK -->
+  <section id="produk" class="container">
+
+    <div class="section-title">Isi 4 Toples</div>
+    <div class="grid">
+      <div class="card"><img src="/images/kuker1.png" onclick="viewImage(this.src)"><div class="card-body"><h3>Paket 4 Toples</h3><button class="order-btn" onclick="openModal('Isi 4 Toples','A,B,C')">Order Now</button></div></div>
+      <div class="card"><img src="/images/kuker2.png" onclick="viewImage(this.src)"><div class="card-body"><h3>Paket 4 Toples</h3><button class="order-btn" onclick="openModal('Isi 4 Toples','D,E')">Order Now</button></div></div>
+    </div>
+
+    <div class="section-title">Isi 3 Toples</div>
+    <div class="grid">
+      <div class="card"><img src="/images/kuker3.png" onclick="viewImage(this.src)"><div class="card-body"><h3>Paket 3 Toples</h3><button class="order-btn" onclick="openModal('Isi 3 Toples','A,B,C')">Order Now</button></div></div>
+      <div class="card"><img src="/images/kuker4.png" onclick="viewImage(this.src)"><div class="card-body"><h3>Paket 3 Toples</h3><button class="order-btn" onclick="openModal('Isi 3 Toples','D,E,F')">Order Now</button></div></div>
+      <div class="card"><img src="/images/kuker5.png" onclick="viewImage(this.src)"><div class="card-body"><h3>Paket 3 Toples</h3><button class="order-btn" onclick="openModal('Isi 3 Toples','G,H,I')">Order Now</button></div></div>
+    </div>
+
+    <div class="section-title">Isi 2 Toples</div>
+    <div class="grid">
+      <div class="card"><img src="/images/kuker6.png" onclick="viewImage(this.src)"><div class="card-body"><h3>Paket 2 Toples</h3><button class="order-btn" onclick="openModal('Isi 2 Toples','A,B,C')">Order Now</button></div></div>
+      <div class="card"><img src="/images/kuker7.png" onclick="viewImage(this.src)"><div class="card-body"><h3>Paket 2 Toples</h3><button class="order-btn" onclick="openModal('Isi 2 Toples','D,E,F')">Order Now</button></div></div>
+      <div class="card"><img src="/images/kuker8.png" onclick="viewImage(this.src)"><div class="card-body"><h3>Paket 2 Toples</h3><button class="order-btn" onclick="openModal('Isi 2 Toples','G,H,I')">Order Now</button></div></div>
+    </div>
+
+    <div class="section-title">Paket Spesial</div>
+    <div class="grid">
+      <div class="card"><img src="/images/kuker9.png" onclick="viewImage(this.src)"><div class="card-body"><h3>Paket Spesial</h3><button class="order-btn" onclick="orderSpesial()">Order Now</button></div></div>
+    </div>
+
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <h2 id="modalTitle">Pilih Paket</h2>
+      <div class="paket">
+        <label><input type="checkbox" value="Paket A"> Paket A</label>
+        <label><input type="checkbox" value="Paket B"> Paket B</label>
+        <label><input type="checkbox" value="Paket C"> Paket C</label>
+      </div>
+      <button onclick="orderWA()">Pesan via WhatsApp</button>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 <strong>Halalin Cake & Bakery</strong> · <a href="https://rotisobekhalalin.my.id" target="_blank">rotisobekhalalin.my.id</a>
+  </footer>
+
+  <script>
+    const modal=document.getElementById('modal');
+    let currentGroup='';
+    let currentOptions=[];
+
+    function openModal(group,options){
+      currentGroup=group;
+      currentOptions=options.split(',');
+      document.getElementById('modalTitle').innerText=`${group} – Pilih Paket`;
+      const box=document.querySelector('.paket');
+      box.innerHTML='';
+      currentOptions.forEach(p=>{
+        box.innerHTML+=`<label><input type="checkbox" value="Paket ${p}"> Paket ${p}</label>`;
+      });
+      modal.style.display='flex';
+    }
+
+    modal.onclick=e=>{if(e.target===modal)modal.style.display='none'}
+
+    function orderWA(){
+      const checked=[...document.querySelectorAll('.paket input:checked')].map(c=>c.value);
+      if(!checked.length){alert('Pilih minimal 1 paket');return}
+      const text=`Assalamu'alaikum, saya mau pesan ${currentGroup}: ${checked.join(', ')}`;
+      window.open(`https://wa.me/6281280230885?text=${encodeURIComponent(text)}`,'_blank');
+    }
+
+    function orderSpesial(){
+      const text="Assalamu'alaikum, saya mau pesan Paket Spesial";
+      window.open(`https://wa.me/6281280230885?text=${encodeURIComponent(text)}`,'_blank');
+    }
+
+    function viewImage(src){
+      const viewer=document.createElement('div');
+      viewer.className='modal';
+      viewer.style.display='flex';
+      viewer.innerHTML=`<img src="${src}" class="img-view">`;
+      viewer.onclick=()=>viewer.remove();
+      document.body.appendChild(viewer);
+    }
+  </script>
+
+</body>
+</html>
