@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roti Sobek Halalin - Premium Bakery</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* === 1. KONFIGURASI ROOT & VARIABEL WARNA (TIDAK DIUBAH, HANYA DIPERLUAS) === */
+    :root {
+      --tosca-light: #a0e7e5;
+      --tosca: #40b7af;         /* Warna Utama Identitas */
+      --tosca-dark: #2f8f8b;
+      --tosca-deep: #1a5e5b;    /* Tambahan untuk kontras */
+      --text-dark: #002f2f;
+      --text-light: #f4fcfc;
+      --bg-light: #e6f7f7;
+      --white: #ffffff;
+      --shadow-soft: 0 10px 30px rgba(64, 183, 175, 0.15);
+      --shadow-hard: 0 5px 15px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease-in-out;
+    }
+
+    /* === 2. RESET & TYPOGRAPHY BERKELAS === */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif; /* Font modern */
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif; /* Font judul mewah */
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* === 3. NAVIGATION BAR (TAMBAHAN BARU AGAR SEPERTI WEB PRO) === */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: var(--transition);
+    }
+
+    .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--tosca-dark);
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      font-weight: 600;
+      color: var(--text-dark);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--tosca);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a:hover { color: var(--tosca); }
+
+    /* Mobile Menu Toggle (Hamburger) */
+    .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: var(--tosca-dark); }
+
+    /* === 4. HERO SECTION (HEADER LAMA YANG DIUPGRADE) === */
+    header {
+      margin-top: 80px; /* Space untuk navbar */
+      background: linear-gradient(135deg, var(--tosca), var(--tosca-dark));
+      width: 90%;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 60px 20px;
+      border-radius: 20px;
+      text-align: center;
+      color: var(--white);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 10%, transparent 10%);
+      background-size: 30px 30px;
+      opacity: 0.3;
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    header h2 { font-size: 1.5rem; font-weight: 400; opacity: 0.9; }
+    header h3 { font-size: 1.2rem; margin-top: 15px; font-style: italic; background: rgba(255,255,255,0.2); display: inline-block; padding: 5px 20px; border-radius: 50px; }
+
+    /* === 5. CONTAINER UTAMA & GRID SYSTEM === */
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    /* Kartu Menu & Outlet */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--shadow-hard);
+      transition: var(--transition);
+      border: 1px solid rgba(64, 183, 175, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .card:hover img { transform: scale(1.1); }
+
+    .card-content { padding: 25px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+    .card-content h3 { color: var(--tosca-dark); margin-bottom: 10px; font-size: 1.8rem; }
+    .card-content p { color: #666; margin-bottom: 20px; }
+
+    .btn-primary {
+      background-color: var(--tosca);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-block;
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--tosca-deep);
+      box-shadow: 0 5px 15px rgba(64, 183, 175, 0.4);
+    }
+
+    /* === 6. DYNAMIC GALLERY (KUE-KUE) === */
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--tosca-dark);
+      margin-bottom: 40px;
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--tosca);
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+
+    /* Grid Modern untuk Kue (Bukan manual row lagi) */
+    .cake-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .cake-item {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--shadow-hard);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .cake-item:hover { transform: scale(1.02); }
+
+    .cake-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+    
+    .cake-info {
+      padding: 15px;
+      text-align: center;
+    }
+    .cake-info h4 { color: var(--text-dark); font-size: 1.1rem; }
+    .cake-tag {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--tosca);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    /* === 7. ABOUT SECTION (REDESIGN) === */
+    .about-section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      margin: 80px auto;
+    }
+
+    .about-img { flex: 1; min-width: 350px; }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; min-height: 400px; }
+    
+    .about-text {
+      flex: 1;
+      padding: 40px;
+      min-width: 300px;
+    }
+    .about-text h3 { color: var(--tosca-dark); font-size: 2rem; margin-bottom: 20px; }
+    .about-text p { color: #555; font-size: 1rem; margin-bottom: 20px; line-height: 1.8; text-align: justify; }
+
+    /* === 8. FOOTER BERKELAS === */
+    footer {
+      background: linear-gradient(to right, #5cc4ff, #40b7af);
+      color: #002f3a;
+      padding: 80px 0 40px;
+      clip-path: polygon(0 10% , 100% 0, 100% 100%, 0 100%);
+      margin-top: -50px; /* Overlap effect */
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+    }
+
+    .footer-col h2 { font-size: 1.8rem; margin-bottom: 10px; }
+    .footer-col h3 { font-size: 1.2rem; margin-bottom: 20px; border-bottom: 2px solid rgba(0,47,58, 0.1); padding-bottom: 10px; display: inline-block;}
+    .footer-col p { margin: 8px 0; font-size: 0.95rem; opacity: 0.9; }
+    .footer-col img { filter: brightness(0) invert(1) opacity(0.8); }
+
+    .copyright {
+      text-align: center;
+      margin-top: 50px;
+      border-top: 1px solid rgba(0,47,58, 0.1);
+      padding-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Navbar */
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      .nav-links {
+        position: absolute;
+        top: 70px;
+        right: -100%;
+        background: white;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        padding: 20px 0;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        transition: 0.3s;
+      }
+      .nav-links.active { right: 0; }
+      header h1 { font-size: 2.5rem; }
+      .about-section { flex-direction: column; }
+    }
+    /* SECTION BANNER + TOMBOL */
+.promo-banner {
+  width: 100%;
+  background: var(--white);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.promo-img {
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.promo-btn {
+  background: linear-gradient(90deg, #40b7af, #5cc4ff);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(64, 183, 175, 0.3);
+  transition: 0.3s ease;
+}
+
+.promo-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(64, 183, 175, 0.45);
+}
+
+.order-custom-full {
+  display: inline-block;
+  width: auto;                /* BALIK NORMAL */
+  padding: 20px 450px;
+  background: linear-gradient(135deg, #06b6d4, #0ea5e9);
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 14px;
+  margin-top: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
+}
+
+.order-custom-full:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+  opacity: 0.95;
+}
+
+.more-custom-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.more-title {
+  font-size: 38px;
+  font-weight: 600;
+  color: #0ea5e9; /* tosca biru muda */
+  margin-bottom: 6px;
+}
+
+.more-link {
+  display: inline-block;
+  font-size: 34px;
+  color: #06b6d4;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+
+.more-link:hover {
+  background: rgba(6, 182, 212, 0.12);
+  transform: translateY(-2px);
+}
+
+.menu-button-wrapper{
+  display:flex;
+  justify-content:center;
+  margin:50px 0;
+}
+
+.menu-button{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+
+  width:100%;
+  max-width:900px;   /* panjang tapi tidak kelewat */
+  padding:30px 20px;
+
+  background:linear-gradient(90deg,#40b7af,#5cc4ff);
+  border-radius:16px;   /* persegi panjang, bukan pil bulat */
+  
+  color:white;
+  text-decoration:none;
+  font-weight:700;
+  font-size:1.5rem;
+
+  box-shadow:0 10px 28px rgba(0,0,0,.25);
+  transition:all .3s ease;
+}
+
+.menu-button img{
+  width:350px;
+  height:350px;
+  object-fit:contain;
+}
+
+.menu-button:hover{
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:0 20px 45px rgba(0,0,0,.35);
+}
+
+.full-width-action {
+  grid-column: 1 / -1;     /* ambil 1 baris penuh grid */
+  display: flex;
+  flex-direction: column; /* susun atas ke bawah */
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+.menu-button{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+
+  width:100%;
+  max-width:900px;   /* panjang tapi tidak kelewat */
+  padding:30px 20px;
+
+  background:linear-gradient(90deg,#40b7af,#5cc4ff);
+  border-radius:16px;   /* persegi panjang, bukan pil bulat */
+  
+  color:white;
+  text-decoration:none;
+  font-weight:700;
+  font-size:1.5rem;
+
+  box-shadow:0 10px 28px rgba(0,0,0,.25);
+  transition:all .3s ease;
+}
+
+.menu-button img{
+  width:350px;
+  height:350px;
+  object-fit:contain;
+}
+
+.menu-button:hover{
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:0 20px 45px rgba(0,0,0,.35);
+}
+.menu-button-group {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.menu-button-group .menu-button-wrapper {
+  margin: 0;
+  flex: 1;
+  max-width: 450px; /* biar dua tombol muat sejajar */
+}
+
+.full-width-action {
+  grid-column: 1 / -1;     /* ambil 1 baris penuh grid */
+  display: flex;
+  flex-direction: column; /* susun atas ke bawah */
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-logo">ROTI SOBEK HALALIN</div>
+    <div class="menu-toggle" onclick="toggleMenu()">Ã¢ËœÂ°</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Galeri Kue</a></li>
+      <li><a href="#about">Tentang</a></li>
+      <li><a href="#contact">Kontak</a></li>
+    </ul>
+  </nav>
+
+  <header id="home">
+    <h1>Roti Sobek</h1>
+    <h2>By Halalin Cake</h2>
+    <h3>Oleh-oleh Sederhana tapi bikin Rindu</h3>
+  </header>
+  
+  <div class="container">
+    
+    <section class="features-grid" id="menu">
+      <article class="card">
+        <div style="overflow: hidden;">
+          <img src="images/menu.png" alt="Menu Roti Sobek">
+        </div>
+        <div class="card-content">
+          <h3>Varian Menu</h3>
+          <p>Temukan berbagai varian rasa roti sobek lembut yang memanjakan lidah Anda.</p>
+          <button class="btn-primary" onclick="window.location.href='menu/index.html'">LIHAT MENU</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <div style="overflow: hidden;">
+          <img src="images/pengasinan.png" alt="Outlet Location">
+        </div>
+        <div class="card-content">
+          <h3>Lokasi Outlet</h3>
+          <p>Kunjungi outlet terdekat kami untuk mendapatkan roti fresh from the oven.</p>
+          <button class="btn-primary" onclick="window.location.href='outlate/index.html'">CARI OUTLET</button>
+        </div>
+      </article>
+       
+       <article class="card">
+        <div style="overflow: hidden;">
+          <img src="/ourmenu/donut.png" alt="Outlet Location">
+        </div>
+        <div class="card-content">
+          <h3>Our Other menu</h3>
+          <p>Selain roti sobek halalin juga mempunyai produk lain seperti donut,soes,bomboloni dll. </p>
+          <button class="btn-primary" onclick="window.location.href='ourmenu/index.html'">Other menu</button>
+        </div>
+      </article>
+      <div class="full-width-action">
+     <!-- TOMBOL HAMPERS -->
+  <div class="menu-button-group">
+
+  <div class="menu-button-wrapper">
+    <a href="/kuker/index.html" class="menu-button">
+      <img src="images/kuker1.png" alt="Hampers Kuker">
+      <span>Hampers Kuker Halalin 2026</span>
+    </a>
+  </div>
+
+  <div class="menu-button-wrapper">
+    <a href="/dinein/index.html" class="menu-button">
+      <img src="images/rotisobekhotplate.png" alt="Menu Dine In">
+      <span>Menu Dine In</span>
+    </a>
+  </div>
+      
+    <a href="https://wa.me/6281280230885?text=Halo%20saya%20ingin%20order%20custom%20cake"
+   class="order-custom-full"
+   target="_blank">
+   Order Custom Cake 📩
+</a>
+</div>
+    </section>
+  <div style="position: relative; width: 100%; max-width: 700px; margin: auto; padding-top: 56.25%;">
+  <video controls style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;">
+    <source src="/video/videorotisobek.mp4" type="video/mp4">
+  </video>
+</div>
+    <h2 class="section-title" id="gallery">Our custom cake</h2>
+    
+    <div class="cake-gallery" id="cakeContainer">
+      </div>
+<!-- More Custom Cake Section -->
+<div class="more-custom-section">
+  <p class="more-title">More Custom Cake</p>
+  <a href="https://www.instagram.com/katalogcake.halalin/" 
+     class="more-link" 
+     target="_blank">
+     @katalogcake.halalin
+  </a>
+</div>
+    <section class="about-section" id="about">
+      <div class="about-img">
+        <img src="images/roti-banyak2.png" alt="Tentang Roti Sobek Halalin">
+      </div>
+      <div class="about-text">
+        <h3>About Me</h3>
+        <p>
+          Roti Sobek Halalin menghadirkan roti sobek yang lembut, hangat, dan selalu segar, dibuat dengan cinta dan bahan berkualitas tinggi. Setiap gigitan menawarkan tekstur empuk yang khas, rasa manis yang pas, dan aroma menggoda.
+        </p>
+        <p>
+          Kami berkomitmen untuk menyediakan oleh-oleh sederhana namun berkesan. Tidak hanya roti, kami juga menghadirkan berbagai varian kue ready stock dan custom Cake, semuanya diproses dengan standar halal yang terpercaya.
+        </p>
+        <button class="btn-primary" style="width: auto; padding: 10px 40px;">Selengkapnya</button>
+      </div>
+    </section>
+
+  </div>
+
+  <footer id="contact">
+    <div class="footer-container">
+      
+      <div class="footer-col">
+        <h2>ROTI SOBEK HALALIN</h2>
+        <p>Fresh Bread & More...</p>
+        <img src="/images/halal.png" alt="Halal Logo" style="width:80px; margin-top:15px;">
+      </div>
+
+      <div class="footer-col">
+        <h3>MENU</h3>
+        <p><a href="#about">Tentang Kami</a></p>
+        <p><a href="#menu">Lokasi</a></p>
+        <p><a href="#gallery">Varian Roti</a></p>
+        <p><a href="#contact">Kontak</a></p>
+      </div>
+
+      <div class="footer-col">
+        <h3>BANTUAN</h3>
+        <p>FAQ</p>
+        <p>Syarat & Ketentuan</p>
+        <p>Kebijakan Privasi</p>
+      </div>
+
+      <div class="footer-col">
+        <h3>KONTAK KAMI</h3>
+        <p>Ã°Å¸â€œÅ¾ 0812-8023-0885</p>
+        <p>Ã°Å¸â€œÂ§ halalincakebakery@gmail.com</p>
+        <p>Ã°Å¸â€œÂ· @rotisobekbyhalalin</p>
+        
+        <h4 style="margin-top:20px; font-size:1rem;">Layanan Pengaduan</h4>
+        <p style="font-size:0.85rem;">PT Halalin Kayo Indonesia</p>
+      </div>
+
+    </div>
+    <div class="copyright">
+      &copy; 2023 Roti Sobek Halalin. All Rights Reserved. Designed with Class.
+    </div>
+  </footer>
+
+  <script>
+    // 1. DATA SIMULATION (MENSIMULASIKAN DATABASE BACKEND)
+    // Alih-alih menulis HTML manual berulang-ulang, kita buat array data objek.
+    const products = [
+      { img: 'images/kue1.png', name: 'Signature Cake 1', category: 'Best Seller' },
+      { img: 'images/kue2.png', name: 'Signature Cake 2', category: 'Favorite' },
+      { img: 'images/kue3.png', name: 'Signature Cake 3', category: 'New' },
+      { img: 'images/kue4.png', name: 'Classic Cake 1', category: 'Classic' },
+      { img: 'images/kue5.png', name: 'Classic Cake 2', category: 'Sweet' },
+      { img: 'images/kue6.png', name: 'Classic Cake 3', category: 'Soft' },
+      { img: 'images/kue7.png', name: 'Premium Cake 1', category: 'Premium' },
+      { img: 'images/kue8.png', name: 'Premium Cake 2', category: 'Gift' },
+      { img: 'images/kue9.png', name: 'Premium Cake 3', category: 'Special' },
+      ];
+    // 2. DYNAMIC RENDERING FUNCTION
+    // Fungsi ini mengambil data di atas dan mengubahnya menjadi HTML cards secara otomatis
+    function renderGallery() {
+      const container = document.getElementById('cakeContainer');
+      
+      products.forEach((product, index) => {
+        // Membuat elemen div
+        const card = document.createElement('div');
+        card.className = 'cake-item';
+        // Animasi delay bertingkat agar terlihat mewah saat load
+        card.style.animation = `fadeInUp 0.5s ease forwards ${index * 0.1}s`;
+        
+        // Mengisi HTML dalam kartu
+        card.innerHTML = `
+          <div style="overflow:hidden;">
+            <img src="${product.img}" alt="${product.name}" loading="lazy">
+          </div>
+          <span class="cake-tag">${product.category}</span>
+          <div class="cake-info">
+            <h4>${product.name}</h4>
+          </div>
+        `;
+        
+        container.appendChild(card);
+      });
+    }
+
+    // 3. INTERACTIVE NAVBAR
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+    }
+
+    // Menjalankan fungsi saat halaman selesai dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+      renderGallery();
+      
+      // Efek Sticky Navbar saat scroll
+      window.addEventListener('scroll', () => {
+        const nav = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+          nav.style.boxShadow = "0 5px 20px rgba(0,0,0,0.1)";
+        } else {
+          nav.style.boxShadow = "0 2px 10px rgba(0,0,0,0.05)";
+        }
+      });
+    });
+
+  </script>
+
+  <style>
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</body>
+</html>
